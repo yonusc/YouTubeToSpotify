@@ -22,10 +22,9 @@ This project depends on several Python libraries, which can be installed using p
 - `requests` for making HTTP requests.
 - `json` for handling JSON data, included with Python.
 
-To install these dependencies, run the following command:
+To install these dependecies, run the following command:
 
-```bash
-python -m pip install google-auth-oauthlib google-api-python-client yt-dlp spotipy requests
+- python -m pip install google-auth-oauthlib google-api-python-client yt-dlp spotipy requests
 
 #### Configuration
 
