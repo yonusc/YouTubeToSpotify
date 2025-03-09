@@ -6,7 +6,7 @@ This project automates the process of transferring music playlists from YouTube 
 
 ## Getting Started
 
-### Prerequisites
+## Prerequisites
 
 To run this application, you'll need the following installed on your system:
 - Python 3.13
@@ -17,16 +17,38 @@ To run this application, you'll need the following installed on your system:
 This project depends on several Python libraries, which can be installed using pip. Below are the necessary libraries:
 - `google-auth-oauthlib` for OAuth handling with Google APIs.
 - `google-api-python-client` for accessing the YouTube Data API.
-- `youtube_dl` for extracting video details.
-- `requests` for making HTTP requests to the Spotify Web API.
-- `json` for handling JSON data (included with Python).
+- `youtube-dl` for extracting video details (Note: `youtube-dl` often updates due to changes in YouTube's API, so use `yt-dlp` as an alternative if issues arise).
+- `spotipy` for interacting with the Spotify Web API.
+- `requests` for making HTTP requests.
+- `json` for handling JSON data, included with Python.
 
 To install these dependencies, run the following command:
 
-`python -m pip install google-auth-oauthlib google-api-python-client youtube_dl requests`
+```bash
+python -m pip install google-auth-oauthlib google-api-python-client yt-dlp spotipy requests
 
-### Usage
+#### Configuration
 
-To run the script, navigate to the directory cont
+Spotify API: You need to register your application at Spotify Developer Dashboard to get the client_id and client_secret. Set up the redirect URI as http://localhost:3000/ or another URI of your choice.
 
+YouTube API: Enable the YouTube Data API v3 via the Google Developers Console and download the client configuration. Save this file as clientSecretYT.json in your project directory.
 
+#### Usage
+
+Navigate to the project directory and run the script:
+
+'python main.py'
+
+##### How It Works
+
+The script performs several key steps:
+
+- Authenticates the user using OAuth for both YouTube and Spotify.
+- Fetches a list of videos from a specified YouTube playlist.
+- Extracts the title and artist from each video and searches for the song on Spotify.
+- If the song is found on Spotify, it adds it to a new Spotify playlist.
+
+##### Limitations
+
+- The accuracy of transferring songs depends on the availability of the songs on Spotify and the accuracy of the video titles on YouTube.
+- YouTube videos without clear artist and song title information may not be correctly transferred.

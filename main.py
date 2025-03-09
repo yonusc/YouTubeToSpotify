@@ -10,8 +10,11 @@ import googleapiclient.errors
 import requests
 import json
 
+# Stores the Spotify API token and user ID for making authorized API requests
 spotify_token = 'BQBedx-SyaPrIziLjdDpNLbhdrGGeg_5LhUfo_GFFT9LCDGVcrOu4ewbclnPKYbtI_X6IdxyRf_LFI8f4AkFh7lgJkQ6WJG1USCiNUfg7DILjYnovRF2PXNem-Cb3JYlg5WscAgLC6U'
 spotify_user_id = 'c809b977677b45bcb6eb07936cd699be'
+
+# Define the scopes for the YouTube API
 scopes = ["https://www.googleapis.com/auth/youtube.readonly"]
 
 # Set up Spotify client with automatic token management
@@ -24,11 +27,15 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
 
 def get_play():
 
+    # Fetches playlist data from YouTube using the YouTube Data API v3
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"  # Only during development!
  
     api_service_name = "youtube"
     api_version = "v3"
-    client_secrets_file = "C:/Users/yonus/Documents/GitHub/YouTubeToSpotify/clientSecretYT.json"
+
+    # Get the path to the client secrets file
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    client_secrets_file = os.path.join(dir_path, "clientSecretYT.json")
  
     # Get credentials and create an API client
     flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
@@ -36,6 +43,7 @@ def get_play():
     credentials = flow.run_local_server()
     youtube = googleapiclient.discovery.build(api_service_name, api_version, credentials=credentials)
  
+    # Make API request to get playlist items
     request = youtube.playlistItems().list(
         part="snippet",
         playlistId="PL61tGsgg52oXJuGWW-11eZ2DIXF059A0-"
@@ -45,10 +53,12 @@ def get_play():
     return response
 
 def extract_song_from_yt(dic):
+
+    # Extracts song and artist information from YouTube playlist data
     url = "https://www.youtube.com/watch?v="
     info = []
     ydl_opts = {
-        'quiet': True,  # Quiets most output
+        'quiet': True,  # Suppresses most console output
         'no_warnings': True,  # Suppresses warnings
         'ignoreerrors': True  # Continue on download errors
     }
@@ -71,9 +81,8 @@ def extract_song_from_yt(dic):
 
     return info
 
-import re
-
 def clean_title(title):
+
     # Remove common suffixes and other non-essential parts of titles
     title = re.sub(r"\(official.*?\)", "", title, flags=re.I)
     title = re.sub(r"\[official.*?\]", "", title, flags=re.I)
@@ -83,10 +92,13 @@ def clean_title(title):
     return title
 
 def get_spotify_uri(track, artist):
+
+    # Search Spotify for a track and artist and return the track URI if found
     track = urllib.parse.quote(clean_title(track))  # URL encode the track
     artist = urllib.parse.quote(clean_title(artist))  # URL encode the artist
     query = f"https://api.spotify.com/v1/search?query=track%3A{track}+artist%3A{artist}&type=track"
     response = requests.get(query, headers={"Content-Type": "application/json", "Authorization": f"Bearer {spotify_token}"})
+    
     print("Spotify Query:", query)  # Print the query to debug
     if response.status_code == 200:
         songs = response.json()["tracks"]["items"]
@@ -100,18 +112,13 @@ def get_spotify_uri(track, artist):
         return None
 
 def create_playlist(spotify_user_id):
-    """Create A New Playlist using user's Spotify ID"""
+    # Create A New Playlist using user's Spotify ID
     playlist = sp.user_playlist_create(user=sp.me()['id'], name="Test Playlist", public=True, description="Songs")
     return playlist['id']
 
-# Use this function to create a playlist and catch any exceptions if failed
-try:
-    playlist_id = create_playlist(spotify_user_id)
-    print("Created playlist with ID:", playlist_id)
-except Exception as e:
-    print("Failed to create playlist:", e)
-
 def add_song(spotipy_client, playlist_id, urls):
+
+    # Add songs to Spotify playlist
     if not urls:
         print("No URLs provided to add to the playlist.")
         return "No songs to add."
