@@ -3,6 +3,7 @@ import re
 import urllib.parse
 import yt_dlp as youtube_dl
 import spotipy
+from dotenv import load_dotenv
 from spotipy.oauth2 import SpotifyOAuth
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
@@ -10,17 +11,19 @@ import googleapiclient.errors
 import requests
 import json
 
-# Stores the Spotify API token and user ID for making authorized API requests
-spotify_token = 'BQBedx-SyaPrIziLjdDpNLbhdrGGeg_5LhUfo_GFFT9LCDGVcrOu4ewbclnPKYbtI_X6IdxyRf_LFI8f4AkFh7lgJkQ6WJG1USCiNUfg7DILjYnovRF2PXNem-Cb3JYlg5WscAgLC6U'
-spotify_user_id = 'c809b977677b45bcb6eb07936cd699be'
+# Load environment variables
+load_dotenv()
+
+spotify_token = os.getenv('SPOTIFY_TOKEN')
+spotify_user_id = os.getenv('SPOTIFY_USER_ID')  
 
 # Define the scopes for the YouTube API
 scopes = ["https://www.googleapis.com/auth/youtube.readonly"]
 
 # Set up Spotify client with OAuth2 authentication
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
-    client_id='c809b977677b45bcb6eb07936cd699be',
-    client_secret='616baaf2d66b430f95564bc3e08fc746',
+    client_id= os.getenv('SPOTIFY_CLIENT_ID'),
+    client_secret= os.getenv('SPOTIFY_CLIENT_SECRET'),
     redirect_uri='http://localhost:3000',
     scope="playlist-modify-public playlist-modify-private"
 ))
