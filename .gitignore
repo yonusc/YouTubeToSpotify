@@ -5,6 +5,7 @@ __pycache__/
 
 # Caching directories
 .cache/
+.cache
 .vscode/
 
 # OS generated files
