@@ -17,7 +17,7 @@ spotify_user_id = 'c809b977677b45bcb6eb07936cd699be'
 # Define the scopes for the YouTube API
 scopes = ["https://www.googleapis.com/auth/youtube.readonly"]
 
-# Set up Spotify client with automatic token management
+# Set up Spotify client with OAuth2 authentication
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     client_id='c809b977677b45bcb6eb07936cd699be',
     client_secret='616baaf2d66b430f95564bc3e08fc746',

@@ -36,6 +36,7 @@ YouTube API: Enable the YouTube Data API v3 via the Google Developers Console an
 
 Navigate to the project directory and run the script:
 
+'python spotifyToken.py', copy and paste the result into "spotify_token" in main.py
 'python main.py'
 
 ##### How It Works
