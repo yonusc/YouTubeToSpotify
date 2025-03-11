@@ -17,14 +17,17 @@ To run this application, you'll need the following installed on your system:
 This project depends on several Python libraries, which can be installed using pip. Below are the necessary libraries:
 - `google-auth-oauthlib` for OAuth handling with Google APIs.
 - `google-api-python-client` for accessing the YouTube Data API.
-- `youtube-dl` for extracting video details (Note: `youtube-dl` often updates due to changes in YouTube's API, so use `yt-dlp` as an alternative if issues arise).
+- `yt-dlp` as a more up-to-date fork of `youtube-dl`, for extracting video details. Use `youtube-dl` only if `yt-dlp` is not suitable.
 - `spotipy` for interacting with the Spotify Web API.
+- `python-dotenv` for loading environment variables from a `.env` file.
 - `requests` for making HTTP requests.
-- `json` for handling JSON data, included with Python.
+- `json`, which is included with Python, for handling JSON data.
 
-To install these dependecies, run the following command:
+To install these dependencies, run the following command:
 
-- python -m pip install google-auth-oauthlib google-api-python-client yt-dlp spotipy requests
+```bash
+python -m pip install google-auth-oauthlib google-api-python-client yt-dlp spotipy python-dotenv requests
+
 
 #### Configuration
 
