@@ -28,15 +28,22 @@ To install these dependecies, run the following command:
 
 #### Configuration
 
-- Spotify API: You need to register your application at Spotify Developer Dashboard (https://developer.spotify.com/dashboard) to get the client_id and client_secret. Set up the redirect URI as http://localhost:3000/ or another URI of your choice.
+- Spotify API: You need to register the application at Spotify Developer Dashboard (https://developer.spotify.com/dashboard) to get the client_id and client_secret. Set up the redirect URI as http://localhost:3000/ or another URI of your choice.
 
-- YouTube API: Enable the YouTube Data API v3 via the Google Developers Console (https://console.cloud.google.com/) and download the client configuration. Save this file as clientSecretYT.json in your project directory.
+- YouTube API: Enable the YouTube Data API v3 via the Google Developers Console (https://console.cloud.google.com/) and download the client configuration. Save this file as clientSecretYT.json at the root of the project directory.
+
+- Create a .env file at the root of the directory containing: 
+    SPOTIFY_TOKEN=your_spotify_token_here
+    SPOTIFY_USER_ID=your_spotify_user_id_here
+    SPOTIFY_CLIENT_ID=your_spotify_client_id_here
+    SPOTIFY_CLIENT_SECRET=your_spotify_client_secret_here
+
 
 #### Usage
 
 Navigate to the project directory and run the script:
 
-- 'python spotifyToken.py', copy and paste the result into "spotify_token" in main.py
+- 'python ex.spotifyToken.py', copy and paste the result into "spotify_token" in main.py
 - 'python main.py'
 
 ##### How It Works
